@@ -1,115 +1,168 @@
+import { useState } from 'react';
+import { CldUploadWidget, getCldImageUrl } from 'next-cloudinary';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Image from "next/image";
-import localFont from "next/font/local";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const STATES = {
+    INITIAL: 'initial',
+    LOADING: 'loading',
+    ERROR: 'error',
+    JUMPSCARE: 'jumpscare'
+};
 
 export default function Home() {
-  return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    const [url, setUrl] = useState(null);
+    const [showWidget, setShowWidget] = useState(true);
+    const [currentState, setCurrentState] = useState(STATES.INITIAL);
+    const [retryCount, setRetryCount] = useState(0);
+    const [publicId, setPublicId] = useState(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    const generateTransformedUrl = (pid) => {
+        return getCldImageUrl({
+            src: pid,
+            width: 300,
+            height: 300,
+            replace: {
+                from: 'face',
+                to: 'terrifying jumpscare face screaming with mouth wide open showcasing large pointy teeth surreal and otherworldly features intricate details dramatic shadows'
+            },
+            replaceBackground: {
+                prompt: 'A hauntingly realistic cemetery shrouded in fog eerie shadows gnarled trees realistic skeletons emerging from ancient graves ominous atmosphere dramatic lighting'
+            },
+        });
+    };
+
+    const handleImageLoad = () => {
+        setTimeout(() => setCurrentState(STATES.ERROR), 2000);
+    };
+
+    const handleImageError = () => {
+        console.log('Image failed to load, retrying...');
+        setRetryCount(prev => prev + 1);
+        const newUrl = generateTransformedUrl(publicId) + `?retry=${retryCount}`;
+        setUrl(newUrl);
+    };
+
+    const handleShowMore = () => {
+        setCurrentState(STATES.JUMPSCARE);
+        const scream = new Audio('/scream.mp3');
+        scream.play().catch(console.error);
+    };
+
+    const InitialState = () => (
+        <div className="max-w-2xl mx-auto text-center p-12 bg-gradient-to-b from-amber-50 to-amber-100 border-8 border-double border-amber-900 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.2)] relative overflow-hidden">
+            {/* Victorian decorative corners */}
+            <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-amber-900 rounded-tl-lg" />
+            <div className="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-amber-900 rounded-tr-lg" />
+            <div className="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-amber-900 rounded-bl-lg" />
+            <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-amber-900 rounded-br-lg" />
+
+            <h1 className="text-4xl font-serif mb-6 text-amber-900 tracking-widest relative animate-flicker">
+                Madame Victoria's
+                <span className="block text-5xl mt-2 font-bold text-red-900">Portrait Parlour</span>
+            </h1>
+            <div className="w-32 h-1 bg-amber-900 mx-auto mb-8" />
+            <p className="mb-8 font-serif italic text-lg text-amber-900 leading-relaxed">
+                Step right up, dear guest!<br/>
+                Allow me to capture your likeness in the most... <span className="text-red-900">modern</span> fashion of 1887.
+            </p>
+            {showWidget && (
+                <CldUploadWidget
+                    uploadPreset="upload-unsigned-images"
+                    onSuccess={(results, widget) => {
+                        const pid = results.info.public_id;
+                        setPublicId(pid);
+                        setShowWidget(false);
+                        widget.close();
+                        setCurrentState(STATES.LOADING);
+                        setUrl(generateTransformedUrl(pid));
+                    }}
+                >
+                    {({ open }) => (
+                        <button
+                            onClick={open}
+                            className="bg-amber-900 text-white px-12 py-6 rounded-lg font-serif text-xl hover:bg-red-900 transition-all duration-500 border-2 border-amber-950 shadow-[0_0_15px_rgba(139,69,19,0.3)] transform hover:scale-105 relative overflow-hidden group"
+                        >
+                            <span className="relative z-10">Take Your Portrait</span>
+                            <div className="absolute inset-0 bg-red-900/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                        </button>
+                    )}
+                </CldUploadWidget>
+            )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+    );
+
+    const LoadingState = () => (
+        <div className="max-w-2xl mx-auto text-center p-8">
+            <div className="relative">
+                <DotLottieReact
+                    src="/loading2.lottie"
+                    autoplay
+                    loop
+                    className="mx-auto mb-4 opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-amber-50 via-transparent to-transparent" />
+            </div>
+            <p className="font-serif italic text-xl text-amber-900 animate-pulse mt-8">
+                Please remain perfectly still...<br/>
+                <span className="text-red-900 text-sm">Your soul— I mean, your essence must be captured just right...</span>
+            </p>
+            {url && (
+                <div className="hidden">
+                    <Image
+                        src={url}
+                        width={800}
+                        height={800}
+                        alt="Preloading"
+                        onLoad={handleImageLoad}
+                        onError={handleImageError}
+                        priority
+                    />
+                </div>
+            )}
+        </div>
+    );
+
+    const ErrorState = () => (
+        <div className="max-w-2xl mx-auto p-4 animate-fadeIn">
+            <div className="bg-gradient-to-r from-red-100 to-amber-100 border-l-8 border-red-900 p-6 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.2)] transform hover:scale-[1.02] transition-all">
+                <p className="text-red-900 font-serif text-lg leading-relaxed relative">
+                    <span className="block mb-2 text-2xl">Oh my...</span>
+                    Something seems to have gone... <span className="italic">terribly wrong</span> with your portrait...
+                    <button
+                        onClick={handleShowMore}
+                        className="ml-2 text-red-700 underline hover:text-red-900 transition-colors duration-300 font-bold"
+                    >
+                        Show me anyway
+                    </button>
+                </p>
+            </div>
+        </div>
+    );
+
+    const JumpscareState = () => (
+        <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+            {url && (
+                <Image
+                    src={url}
+                    width={800}
+                    height={800}
+                    alt="Jumpscare"
+                    priority
+                    className="opacity-100 animate-invertColors shadow-[0_0_50px_rgba(255,0,0,0.5)]"
+                />
+            )}
+        </div>
+    );
+
+    return (
+        <div className="min-h-screen bg-gradient-to-b from-amber-50 to-amber-100">
+            <main className="container mx-auto py-12 px-4">
+                {currentState === STATES.INITIAL && <InitialState />}
+                {currentState === STATES.LOADING && <LoadingState />}
+                {currentState === STATES.ERROR && <ErrorState />}
+                {currentState === STATES.JUMPSCARE && <JumpscareState />}
+            </main>
+        </div>
+    );
 }
