@@ -58,7 +58,7 @@ export default function Home() {
             <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-amber-900 rounded-br-lg" />
 
             <h1 className="text-4xl font-serif mb-6 text-amber-900 tracking-widest relative animate-flicker">
-                Madame Victoria's
+                Madame Victoria&apos;s
                 <span className="block text-5xl mt-2 font-bold text-red-900">Portrait Parlour</span>
             </h1>
             <div className="w-32 h-1 bg-amber-900 mx-auto mb-8" />
