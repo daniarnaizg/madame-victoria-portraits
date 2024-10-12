@@ -20,15 +20,10 @@ export default function Home() {
     const generateTransformedUrl = (pid) => {
         return getCldImageUrl({
             src: pid,
-            width: 300,
-            height: 300,
-            replace: {
-                from: 'face',
-                to: 'terrifying jumpscare face screaming with mouth wide open showcasing large pointy teeth surreal and otherworldly features intricate details dramatic shadows'
-            },
-            replaceBackground: {
-                prompt: 'A hauntingly realistic cemetery shrouded in fog eerie shadows gnarled trees realistic skeletons emerging from ancient graves ominous atmosphere dramatic lighting'
-            },
+            width: 860,
+            height: 1075,
+            namedTransformations: 'dummy_transformation',
+            // namedTransformations: 'victorian_painting_v2',
         });
     };
 
@@ -46,7 +41,7 @@ export default function Home() {
     const handleShowMore = () => {
         setCurrentState(STATES.JUMPSCARE);
         const scream = new Audio('/scream.mp3');
-        scream.play().catch(console.error);
+        // scream.play().catch(console.error);
     };
 
     const InitialState = () => (
@@ -99,7 +94,7 @@ export default function Home() {
                     src="/loading2.lottie"
                     autoplay
                     loop
-                    className="mx-auto mb-4 opacity-80"
+                    className="mx-auto mb-4"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-amber-50 via-transparent to-transparent" />
             </div>
@@ -149,7 +144,7 @@ export default function Home() {
                     height={800}
                     alt="Jumpscare"
                     priority
-                    className="opacity-100 animate-invertColors shadow-[0_0_50px_rgba(255,0,0,0.5)]"
+                    className="radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%)" // animate-invertColors
                 />
             )}
         </div>
