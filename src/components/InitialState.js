@@ -2,13 +2,7 @@ import React from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 
 const InitialState = ({ onUploadSuccess }) => (
-    <div className="max-w-2xl mx-auto text-center p-12 bg-black bg-opacity-80 drop-shadow-md border-8 border-double border-amber-900 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.2)] relative overflow-hidden">
-        {/* Victorian decorative corners */}
-        {/*<div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-amber-900 rounded-tl-lg" />*/}
-        {/*<div className="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-amber-900 rounded-tr-lg" />*/}
-        {/*<div className="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-amber-900 rounded-bl-lg" />*/}
-        {/*<div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-amber-900 rounded-br-lg" />*/}
-
+    <div className="w-full h-full flex flex-col justify-center items-center text-center bg-black bg-opacity-60 drop-shadow-md py-8 px-6">
         <h1 className="text-4xl font-serif mb-6 text-amber-700 tracking-widest relative animate-flicker">
             Madame Victoria&apos;s
             <span className="block text-5xl mt-2 font-bold text-red-700">Portrait Parlour</span>

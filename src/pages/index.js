@@ -1,3 +1,4 @@
+// src/pages/index.js
 import { useState } from 'react';
 import { getCldImageUrl } from 'next-cloudinary';
 import Header from '@/components/Header';
@@ -7,11 +8,14 @@ import LoadingState from '@/components/LoadingState';
 import ErrorState from '@/components/ErrorState';
 import FinalImageDisplay from '@/components/FinalImageDisplay';
 import SpookyBackground from "@/components/SpookyBackground";
+import VintageFrame from "@/components/VintageFrame";
+import JumpscareState from "@/components/JumpscareState";
 
 const STATES = {
     INITIAL: 'initial',
     LOADING: 'loading',
     ERROR: 'error',
+    JUMPSCARE: 'jumpscare',
     FINAL: 'final'
 };
 
@@ -43,9 +47,18 @@ export default function Home() {
     };
 
     const handleShowMore = () => {
-        setCurrentState(STATES.FINAL);
+        setCurrentState(STATES.JUMPSCARE);
         const scream = new Audio('/scream2.mp3');
         scream.play().catch(console.error);
+
+        setTimeout(() => {
+            scream.pause();
+            scream.currentTime = 0; // Reset the audio to the beginning
+        }, 1000);
+
+        setTimeout(() => {
+            setCurrentState(STATES.FINAL);
+        }, 2000);
     };
 
     const handleUploadSuccess = (results, widget) => {
@@ -68,13 +81,17 @@ export default function Home() {
             <Header />
             <main className="flex-grow container mx-auto py-12 relative">
                 <SpookyBackground />
-                {currentState === STATES.INITIAL && <InitialState onUploadSuccess={handleUploadSuccess} />}
+                {currentState === STATES.INITIAL && (
+                    <VintageFrame>
+                        <InitialState onUploadSuccess={handleUploadSuccess} />
+                    </VintageFrame>
+                )}
                 {currentState === STATES.LOADING && <LoadingState url={url} onImageLoad={handleImageLoad} onImageError={handleImageError} />}
                 {currentState === STATES.ERROR && <ErrorState onShowMore={handleShowMore} />}
+                {currentState === STATES.JUMPSCARE && <JumpscareState url={url} />}
                 {currentState === STATES.FINAL && <FinalImageDisplay url={url} />}
             </main>
             <Footer onReset={handleReset} showResetButton={currentState === STATES.FINAL} />
         </div>
     );
-
 }
