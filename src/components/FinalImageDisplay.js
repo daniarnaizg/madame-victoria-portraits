@@ -9,7 +9,7 @@ const FinalImageDisplay = ({ url }) => (
                 layout="fill"
                 objectFit="contain"
                 alt="Victorian Portrait"
-                className="rounded-lg" // animate-invertColors
+                className="rounded-lg animate-invertColors" // animate-invertColors
             />
         </div>
         <p className="mt-4 text-center font-serif italic text-amber-900 text-sm sm:text-base">
