@@ -79,9 +79,7 @@ export default function Home() {
         <div className="min-h-screen flex flex-col justify-between">
             <Header/>
             <main>
-                <div className="">
-                    <SpookyBackground/>
-                </div>
+                <SpookyBackground/>
                 <div className="flex-grow container mx-auto py-12 relative">
                     {currentState === STATES.INITIAL && (
                         <VintageFrame>
