@@ -10,6 +10,7 @@ const images = [
     '/images/portrait6.webp',
     '/images/portrait7.webp',
     '/images/portrait8.webp',
+    '/images/portrait9.webp',
 ];
 
 const shuffleArray = (array) => {
