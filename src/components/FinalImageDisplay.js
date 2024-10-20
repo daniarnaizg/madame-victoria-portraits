@@ -10,7 +10,7 @@ const FinalImageDisplay = ({ url }) => (
                 width={2000}
                 height={2000}
                 alt="Victorian Portrait"
-                className="rounded-lg"
+                className="rounded-lg sepia-[.55]"
             />
         </div>
         <p className="mt-4 text-center font-serif italic text-amber-600 text-sm sm:text-base">

@@ -2,11 +2,14 @@ import React from 'react';
 import Image from "next/image";
 
 const images = [
-    '/images/portrait1.jpg',
-    '/images/portrait2.jpg',
-    '/images/portrait3.jpg',
-    '/images/portrait4.jpg',
-    '/images/portrait5.jpg',
+    '/images/portrait1.webp',
+    '/images/portrait2.webp',
+    '/images/portrait3.webp',
+    '/images/portrait4.webp',
+    '/images/portrait5.webp',
+    '/images/portrait6.webp',
+    '/images/portrait7.webp',
+    '/images/portrait8.webp',
 ];
 
 const shuffleArray = (array) => {
