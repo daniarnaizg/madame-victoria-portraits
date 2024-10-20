@@ -1,19 +1,17 @@
 import React from 'react';
 
 const ErrorState = ({ onShowMore }) => (
-    <div className="max-w-2xl mx-auto p-4 animate-fadeIn">
-        <div className="bg-gradient-to-r from-red-100 to-amber-100 border-l-8 border-red-900 p-6 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.2)] transform hover:scale-[1.02] transition-all">
-            <p className="text-red-900 font-serif text-lg leading-relaxed relative">
-                <span className="block mb-2 text-2xl">Oh my...</span>
-                Something seems to have gone... <span className="italic">terribly wrong</span> with your portrait...
-                <button
-                    onClick={onShowMore}
-                    className="ml-2 text-red-700 underline hover:text-red-900 transition-colors duration-300 font-bold"
-                >
-                    Show me anyway
-                </button>
-            </p>
-        </div>
+    <div className="max-w-2xl mx-auto bg-black bg-opacity-60 drop-shadow-md py-8 px-6 flex flex-col">
+        <p className="text-amber-500 font-serif text-lg leading-relaxed relative mb-4 text-center">
+            <span className="block mb-2 text-2xl text-center">Oh, no...</span>
+            Algo parece haber salido... <span className="italic">terriblemente mal</span> con su retrato...
+        </p>
+        <button
+            onClick={onShowMore}
+            className="text-amber-600 underline hover:text-red-700 transition-colors duration-300 font-bold text-center"
+        >
+            Probemos otra vez
+        </button>
     </div>
 );
 

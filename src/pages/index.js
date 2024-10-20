@@ -1,6 +1,5 @@
-// src/pages/index.js
-import { useState } from 'react';
-import { getCldImageUrl } from 'next-cloudinary';
+import {useState} from 'react';
+import {getCldImageUrl} from 'next-cloudinary';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import InitialState from '@/components/InitialState';
@@ -78,20 +77,28 @@ export default function Home() {
 
     return (
         <div className="min-h-screen flex flex-col main-container">
-            <Header />
+            <Header/>
             <main className="flex-grow container mx-auto py-12 relative">
-                <SpookyBackground />
+                <SpookyBackground/>
                 {currentState === STATES.INITIAL && (
                     <VintageFrame>
-                        <InitialState onUploadSuccess={handleUploadSuccess} />
+                        <InitialState onUploadSuccess={handleUploadSuccess}/>
                     </VintageFrame>
                 )}
-                {currentState === STATES.LOADING && <LoadingState url={url} onImageLoad={handleImageLoad} onImageError={handleImageError} />}
-                {currentState === STATES.ERROR && <ErrorState onShowMore={handleShowMore} />}
-                {currentState === STATES.JUMPSCARE && <JumpscareState url={url} />}
-                {currentState === STATES.FINAL && <FinalImageDisplay url={url} />}
+                {currentState === STATES.LOADING &&
+                    <VintageFrame>
+                        <LoadingState url={url} onImageLoad={handleImageLoad} onImageError={handleImageError}/>
+                    </VintageFrame>
+                }
+                {currentState === STATES.ERROR &&
+                    <VintageFrame>
+                        <ErrorState onShowMore={handleShowMore}/>
+                    </VintageFrame>
+                }
+                {currentState === STATES.JUMPSCARE && <JumpscareState url={url}/>}
+                {currentState === STATES.FINAL && <FinalImageDisplay url={url}/>}
             </main>
-            <Footer onReset={handleReset} showResetButton={currentState === STATES.FINAL} />
+            <Footer onReset={handleReset} showResetButton={currentState === STATES.FINAL}/>
         </div>
     );
 }

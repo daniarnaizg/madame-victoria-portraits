@@ -3,7 +3,7 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import Image from 'next/image';
 
 const LoadingState = ({ url, onImageLoad, onImageError }) => (
-    <div className="max-w-2xl mx-auto text-center p-8">
+    <div className="max-w-2xl mx-auto text-center bg-neutral-700 bg-opacity-90 drop-shadow-md py-8 px-6">
         <div className="relative">
             <DotLottieReact
                 src="/loading2.lottie"
@@ -11,11 +11,11 @@ const LoadingState = ({ url, onImageLoad, onImageError }) => (
                 loop
                 className="mx-auto mb-4"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-amber-50 via-transparent to-transparent" />
+            <div className="absolute" />
         </div>
-        <p className="font-serif italic text-xl text-amber-900 animate-pulse mt-8">
-            Please remain perfectly still...<br/>
-            <span className="text-red-900 text-sm">Your soul— I mean, your essence must be captured just right...</span>
+        <p className="font-serif italic text-xl text-amber-500 animate-pulse mt-8">
+            Por favor, permanezca completamente inmóvil...<br/>
+            <span className="text-amber-600 text-sm">Su alma— quiero decir, su esencia debe ser capturada perfectamente...</span>
         </p>
         {url && (
             <div className="hidden">
