@@ -30,7 +30,7 @@ export default function Home() {
             width: 860,
             height: 1075,
             namedTransformations: 'dummy_transformation',
-            // namedTransformations: 'victorian_painting_v3',
+            // namedTransformations: 'victorian_painting_v2',
         });
     };
 
@@ -76,27 +76,31 @@ export default function Home() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col main-container">
+        <div className="min-h-screen flex flex-col justify-between">
             <Header/>
-            <main className="flex-grow container mx-auto py-12 relative">
-                <SpookyBackground/>
-                {currentState === STATES.INITIAL && (
-                    <VintageFrame>
-                        <InitialState onUploadSuccess={handleUploadSuccess}/>
-                    </VintageFrame>
-                )}
-                {currentState === STATES.LOADING &&
-                    <VintageFrame>
-                        <LoadingState url={url} onImageLoad={handleImageLoad} onImageError={handleImageError}/>
-                    </VintageFrame>
-                }
-                {currentState === STATES.ERROR &&
-                    <VintageFrame>
-                        <ErrorState onShowMore={handleShowMore}/>
-                    </VintageFrame>
-                }
-                {currentState === STATES.JUMPSCARE && <JumpscareState url={url}/>}
-                {currentState === STATES.FINAL && <FinalImageDisplay url={url}/>}
+            <main>
+                <div className="">
+                    <SpookyBackground/>
+                </div>
+                <div className="flex-grow container mx-auto py-12 relative">
+                    {currentState === STATES.INITIAL && (
+                        <VintageFrame>
+                            <InitialState onUploadSuccess={handleUploadSuccess}/>
+                        </VintageFrame>
+                    )}
+                    {currentState === STATES.LOADING &&
+                        <VintageFrame>
+                            <LoadingState url={url} onImageLoad={handleImageLoad} onImageError={handleImageError}/>
+                        </VintageFrame>
+                    }
+                    {currentState === STATES.ERROR &&
+                        <VintageFrame>
+                            <ErrorState onShowMore={handleShowMore}/>
+                        </VintageFrame>
+                    }
+                    {currentState === STATES.JUMPSCARE && <JumpscareState url={url}/>}
+                    {currentState === STATES.FINAL && <FinalImageDisplay url={url}/>}
+                </div>
             </main>
             <Footer onReset={handleReset} showResetButton={currentState === STATES.FINAL}/>
         </div>

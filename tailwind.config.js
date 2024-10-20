@@ -25,11 +25,21 @@ module.exports = {
                     '50%': { filter: 'invert(1)' },
                     '100%': { filter: 'invert(0)' },
                 },
+                moveLeft: {
+                    '0%': { transform: 'translateX(100%)' },
+                    '100%': { transform: 'translateX(-100%)' },
+                },
+                moveRight: {
+                    '0%': { transform: 'translateX(-100%)' },
+                    '100%': { transform: 'translateX(100%)' },
+                },
             },
             animation: {
                 'flicker': 'flicker 3s linear infinite',
                 'fadeIn': 'fadeIn 1s ease-in',
                 'invertColors': 'invertColors 0.2s linear infinite',
+                'moveLeft': 'moveLeft 160s linear infinite',
+                'moveRight': 'moveRight 120s linear infinite',
             },
         },
     },
