@@ -29,8 +29,8 @@ export default function Home() {
             src: pid,
             width: 860,
             height: 1075,
-            namedTransformations: 'dummy_transformation',
-            // namedTransformations: 'victorian_painting_v2',
+            // namedTransformations: 'dummy_transformation',
+            namedTransformations: 'victorian_painting_v2',
         });
     };
 
