@@ -15,6 +15,97 @@ const InitialState = ({ onUploadSuccess }) => (
         <CldUploadWidget
             uploadPreset="upload-unsigned-images"
             onSuccess={onUploadSuccess}
+            options={{
+                sources: ["local", "camera", "url"],
+                multiple: false,
+                maxFiles: 1,
+                language: "es",
+                text: {
+                    en: {
+                        or: "",
+                        url: {
+                            inner_title: "Image URL to upload",
+                            input_placeholder: "http://remote.site.example/images/remote-image.jpg"
+                        },
+                        queue: {
+                            done: "Done",
+                        },
+                        menu: {
+                            files: "My Files",
+                            camera: "Camera",
+                            web: "URL",
+                        },
+                        local: {
+                            dd_title_single: "Drag your image here... if you dare",
+                            browse: "Select",
+                        },
+                        camera: {
+                            capture: "Capture",
+                            cancel: "Cancel",
+                            take_pic: "Take a photo and upload it",
+                            explanation: "Let the camera capture your... beauty",
+                            camera_error: "Error accessing the camera",
+                            retry: "Try Again",
+                            file_name: "Camera_{{time}}",
+                        },
+                    },
+                    es: {
+                        or: "",
+                        url: {
+                            inner_title: "Dirección de la imagen a cargar",
+                            input_placeholder: "http://remote.site.example/images/remote-image.jpg"
+                        },
+                        queue: {
+                            done: "Listo",
+                        },
+                        menu: {
+                            files: "Mis archivos",
+                            camera: "Cámara",
+                            web: "URL",
+                        },
+                        local: {
+                            dd_title_single: "Arrastra tu imagen aquí... si te atreves",
+                            browse: "Seleccionar",
+                        },
+                        camera: {
+                            capture: "Capturar",
+                            cancel: "Cancelar",
+                            take_pic: "Toma una foto y súbela",
+                            explanation: "Deja que la cámara capture tu... belleza",
+                            camera_error: "Error al acceder a la cámara",
+                            retry: "Volver a intentar",
+                            file_name: "Camara_{{time}}",
+                        },
+                    },
+                },
+                styles: {
+                    palette: {
+                        window: "rgba(26, 32, 44, 0.6)", // Dark background with low opacity
+                        windowBorder: "#d69e2e", // Darker border
+                        tabIcon: "#d69e2e", // Light icons
+                        menuIcons: "#d69e2e", // Grey menu icons
+                        textDark: "#2d3748", // Light text
+                        textLight: "#d69e2e", // Amber text
+                        link: "#d69e2e", // Amber links
+                        action: "#ed8936", // Orange action buttons
+                        inactiveTabIcon: "#65748e", // Darker inactive icons
+                        error: "#e53e3e", // Red error messages
+                        inProgress: "#3182ce", // Blue progress
+                        complete: "#38a169", // Green complete
+                        sourceBg: "#2d3748", // Dark source background
+                    },
+                    frame: {
+                        background: "rgba(45, 55, 72, 0.4)", // Dark frame background with low opacity
+                    },
+                    fonts: {
+                        default: null,
+                        "'Cinzel', serif": {
+                            url: "https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap",
+                            active: true,
+                        },
+                    },
+                },
+            }}
         >
             {({ open }) => (
                 <button
