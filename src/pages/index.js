@@ -47,7 +47,7 @@ export default function Home() {
 
     const handleShowMore = () => {
         setCurrentState(STATES.JUMPSCARE);
-        const scream = new Audio('/scream2.mp3');
+        const scream = new Audio('/scream.mp3');
         scream.play().catch(console.error);
 
         setTimeout(() => {
