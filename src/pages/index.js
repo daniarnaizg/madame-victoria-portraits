@@ -48,6 +48,7 @@ export default function Home() {
     const handleShowMore = () => {
         setCurrentState(STATES.JUMPSCARE);
         const scream = new Audio('/scream.mp3');
+        scream.volume = 1.0; // Set volume to maximum
         scream.play().catch(console.error);
 
         setTimeout(() => {
